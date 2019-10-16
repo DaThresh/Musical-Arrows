@@ -1,0 +1,20 @@
+command /voted <text>:
+	description: Sets a player to voted
+	usage: /voted <player>
+	executable by: console
+	trigger:
+		if {ma.voted.%argument 1%} is not set:
+			set {ma.voted.%argument 1%} to 24
+		else:
+			add 24 to {ma.voted.%argument 1%}
+		if {ma.voted::%argument 1%} is not set:
+			set {ma.voted::%argument 1%} to argument 1
+		broadcast "%{ma.prefix}%&6%argument 1% &ahas voted for us!"
+		
+every 1 hour:
+	loop {ma.voted::*}:
+		if {ma.voted.%loop-value%} is greater than or equal to 2:
+			subtract 1 from {ma.voted.%loop-value%}
+		else:
+			delete {ma.voted.%loop-value%}
+			delete {ma.voted::%loop-value%}

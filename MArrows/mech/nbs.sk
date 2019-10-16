@@ -1,0 +1,21 @@
+on script load:
+	set {_num} to 1
+	loop nbs files:
+		set {ma.songs::%{_num}%} to loop-text
+		add 1 to {_num}
+	set {_size} to size of {ma.songs::*}
+	set {_num} to 1
+	while {_num} is set:
+		if {_num} is less than or equal to {_size}:
+			set {_current} to {ma.songs::%{_num}%}
+			if {_current} contains ".nbs":
+				replace ".nbs" with "" in {_current}
+			set {ma.song.current} to {_current}
+			broadcast "%{ma.prefix}%&3Now playing %{_current}%"
+			loop all players:
+				if {ma.player.%loop-player%} is not set:
+					execute console command "/lobbyscoreboard %loop-player%"
+			play nbs {_current} to players and wait
+			add 1 to {_num}
+		else:
+			set {_num} to 1

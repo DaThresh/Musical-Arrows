@@ -1,0 +1,28 @@
+command /leave:
+	description: Leaves a game
+	usage: /leave
+	executable by: players
+	trigger:
+		if {ma.player.%player%} is set:
+			clear the inventory of the player
+			give a note block named "Game Select" to the player
+			subtract 1 from {ma.match.%{ma.player.%player%}%.players}
+			if {ma.map.%{ma.match.%{ma.player.%player%}%.map}%.status} is equal to 1:
+				add 1 to {ma.losses.%player%}
+			teleport player to {ma.old.%player%}
+			if {ma.staff.%player%} is set:
+				restore inventory of player from {ma.inv.%player%}
+			set {_p} to {ma.player.%player%}
+			heal the player
+			delete {ma.player.%player%}
+			execute console command "/lobbyscoreboard %player%"
+			message "%{ma.prefix}%&9Left the game"
+			if {ma.match.%{_p}%.players} is greater than 0:
+				loop all players:
+					if {ma.player.%loop-player%} is equal to {_p}:
+						execute console command "/gamescoreboard %loop-player%"
+						send "%{ma.prefix}%&f%player% &cleft the game!" to loop-player
+			execute console command "/leaderboardupdate %player%"
+		else:
+			message "%{ma.prefix}%&4You are not in a game!"
+		stop trigger

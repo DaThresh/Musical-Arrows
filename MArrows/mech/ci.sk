@@ -1,0 +1,38 @@
+command /clearinventory [<player>]:
+	description: Clears a players inventory
+	usage: /ci [<player>]
+	executable by: players and console
+	aliases: /ci
+	trigger:
+		if player is set:
+			if {ma.staff.%command sender%} exists:
+				if argument 1 is set:
+					if {ma.player.%argument 1%} exists:
+						message "%{ma.prefix}%&4That player is in game!"
+					else:
+						if {ma.staff.%argument 1%} is greater than or equal to {ma.staff.%command sender%}:
+							message "%{ma.prefix}%&4You cannot clear that player's inventory!"
+						else:
+							clear the inventory of argument 1
+							if {ma.player.%argument 1%} is not set:
+								give a note block named "Game Select" to argument 1
+							message "%{ma.prefix}%&9Cleared the inventory of %argument 1%"
+				else:
+					clear the inventory of command sender
+					if {ma.player.%command sender%} is not set:
+						give a note block named "Game Select" to the player
+					message "%{ma.prefix}%&9Cleared your inventory!"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			if argument 1 is set:
+				if {ma.player.%argument 1%} exists:
+					clear the inventory of argument 1
+					if {ma.player.%argument 1%} is not set:
+						give a note block named "Game Select" to argument 1
+					message "%{ma.prefix}%&9Cleared the inventory of %argument 1%"
+				else:
+					message "%{ma.prefix}%&4That player is in game!"
+			else:
+				message "%{ma.prefix}%&4Specify the player!"
+		stop trigger

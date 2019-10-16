@@ -1,0 +1,54 @@
+options:
+	skriptplus: true
+	
+	config location: "../../MusicalArrows/config"
+
+on script load:
+	set {running.musical} to true
+	if {@skriptplus} is equal to true:
+		set {ma.prefix} to colored value of "prefixes.plugin" pulled from {@config location}
+		set {ma.prefix.owner} to colored value of "prefixes.owner" pulled from {@config location}
+		set {ma.prefix.admin} to colored value of "prefixes.admin" pulled from {@config location}
+		set {ma.prefix.mod} to colored value of "prefixes.mod" pulled from {@config location}
+		set {ma.prefix.l1} to colored value of "prefixes.level 1" pulled from {@config location}
+		set {ma.prefix.l2} to colored value of "prefixes.level 2" pulled from {@config location}
+		set {ma.prefix.l3} to colored value of "prefixes.level 3" pulled from {@config location}
+		set {ma.prefix.l4} to colored value of "prefixes.level 4" pulled from {@config location}
+		set {ma.prefix.l5} to colored value of "prefixes.level 5" pulled from {@config location}
+		set {ma.prefix.l6} to colored value of "prefixes.level 6" pulled from {@config location}
+		set {ma.prefix.l7} to colored value of "prefixes.level 7" pulled from {@config location}
+		set {ma.color.owner} to colored value of "tab.color owner" pulled from {@config location}
+		set {ma.color.admin} to colored value of "tab.color admin" pulled from {@config location}
+		set {ma.color.mod} to colored value of "tab.color mod" pulled from {@config location}
+		set {ma.color.l1} to colored value of "tab.level 1 color" pulled from {@config location}
+		set {ma.color.l2} to colored value of "tab.level 2 color" pulled from {@config location}
+		set {ma.color.l3} to colored value of "tab.level 3 color" pulled from {@config location}
+		set {ma.color.l4} to colored value of "tab.level 4 color" pulled from {@config location}
+		set {ma.color.l5} to colored value of "tab.level 5 color" pulled from {@config location}
+		set {ma.color.l6} to colored value of "tab.level 6 color" pulled from {@config location}
+		set {ma.color.l7} to colored value of "tab.level 7 color" pulled from {@config location}
+		set {ma.min.players} to value of "game.min players" pulled from {@config location} parsed as an integer
+		set {ma.max.players} to value of "game.max players" pulled from {@config location} parsed as an integer
+		set {ma.max.spawns} to value of "game.spawns" pulled from {@config location} parsed as an integer
+		set {ma.value.coins.kill} to value of "game.kill coins" pulled from {@config location} parsed as an integer
+		set {ma.value.coins.win} to value of "game.win coins" pulled from {@config location} parsed as an integer
+		set {ma.multiplier.coin} to value of "game.coin multiplier" pulled from {@config location} parsed as a number
+		set {ma.value.xp.kill} to value of "game.kill xp" pulled from {@config location} parsed as an integer
+		set {ma.value.xp.win} to value of "game.win xp" pulled from {@config location} parsed as an integer
+		set {ma.multiplier.xp} to value of "game.xp multiplier" pulled from {@config location} parsed as a number
+		set {ma.value.xp.l2} to value of "leveling.level 2" pulled from {@config location} parsed as an integer
+		set {ma.value.xp.l3} to value of "leveling.level 3" pulled from {@config location} parsed as an integer
+		set {ma.value.xp.l4} to value of "leveling.level 4" pulled from {@config location} parsed as an integer
+		set {ma.value.xp.l5} to value of "leveling.level 5" pulled from {@config location} parsed as an integer
+		set {ma.value.xp.l6} to value of "leveling.level 6" pulled from {@config location} parsed as an integer
+		set {ma.value.xp.l7} to value of "leveling.level 7" pulled from {@config location} parsed as an integer
+		set {ma.end.kills} to value of "game.kills to win" pulled from {@config location} parsed as an integer
+		set {ma.end.time} to value of "game.game time" pulled from {@config location} parsed as an integer
+		set {ma.value.coins.u1} to value of "upgrades.upgrade 1 cost" pulled from {@config location} parsed as an integer
+		set {ma.value.coins.u2} to value of "upgrades.upgrade 2 cost" pulled from {@config location} parsed as an integer
+		set {ma.intermission.time} to value of "game.intermission time" pulled from {@config location} parsed as an integer
+	else:
+		send "%{ma.prefix}%&4Unreadable config, switching to saved values!" to console
+	
+on script unload:
+	delete {running.musical}

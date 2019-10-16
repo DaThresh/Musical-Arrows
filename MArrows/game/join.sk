@@ -1,0 +1,59 @@
+command /insert <player> <integer>:
+	description: Puts a player in a game
+	usage: /insert <player> <match>
+	executable by: console
+	trigger:
+		if {ma.match.%argument 2%.players} is less than {ma.max.players}:
+			if {ma.match.%argument 2%.players} is equal to 0:
+				execute console command "/matchselect %argument 2%"
+				set {_new} to true
+			if {ma.staff.%player-argument%} is set:
+				set {ma.inv.%player-argument%} to serialized inventory of player-argument
+			set {ma.old.%player-argument%} to player-argument's location
+			set {ma.player.%argument 1%} to argument 2
+			set {_number} to a random integer between 1 and {ma.max.spawns}
+			teleport argument 1 to {ma.map.%{ma.match.%{ma.player.%argument 1%}%.map}%.spawn.%{_number}%}
+			add 1 to {ma.match.%argument 2%.players}
+			execute console command "/gitems %player-argument%"
+			set {ma.score.%player-argument%} to 0
+			set player-argument's gamemode to survival
+			loop all players:
+				if {ma.player.%loop-player%} is equal to argument 2:
+					execute console command "/gamescoreboard %loop-player%"
+			if {_new} is equal to true:
+				execute console command "/moderate %argument 2% false"
+		else:
+			if {ma.donor.%argument 1%} is set:
+				set {_reason} to 1
+			else if {ma.staff.%argument 1%} is set:
+				set {_reason} to 2
+			if {_reason} is set:
+				set {_number} to 1
+				loop all players:
+					if {ma.player.%loop-player%} is equal to argument 2:
+						if {ma.donor.%loop-player%} is not set:
+							if {ma.staff.%loop-player%} is not set:
+								set {_temp::%{_number}%} to loop-player
+								add 1 to {_number}
+				if size of {_temp::*} is equal to {ma.max.players}:
+					message "%{ma.prefix}%&4That game is full! (All donors and staff)"
+				else:
+					set {_number} to a random integer between 1 and size of {_temp::*}
+					set {_player} to {_temp::%{_number}%}
+					send "%{ma.prefix}%&4Kicked for a priority player" to {_player}
+					make {_player} execute command "/leave"
+					
+					set {ma.player.%argument 1%} to argument 2
+					set {_number} to a random integer between 1 and {ma.max.spawns}
+					teleport argument 1 to {map.%{ma.match.%{ma.player.%argument 1%}%.map}%.spawn.%{_number}%}
+					add 1 to {ma.match.%argument 2%.players}
+					execute console command "/gitems %player-argument%"
+					set {ma.score.%player-argument%} to 0
+					execute console command "/gamescoreboard %player-argument%"
+					set player's gamemode to survival
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 2:
+							execute console command "/gamescoreboard %loop-player%"
+			else:
+				message "%{ma.prefix}%&4That game is full!"
+		stop trigger

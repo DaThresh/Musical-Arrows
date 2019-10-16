@@ -1,0 +1,129 @@
+command /gamemode <text> [<player>]:
+	description: Sets your gamemode
+	usage: /gamemode <c/s/a>
+	executable by: players and console
+	aliases: /gm
+	trigger:
+		set {_temp} to argument 1 parsed as an integer
+		if {_temp} is equal to 0 or 1 or 2:
+			set {_type} to 2
+		else:
+			set {_type} to 1
+		if player is set:
+			if {ma.staff.%player%} is set:
+				if argument 2 is set:
+					if argument 2 is online:
+						if {ma.staff.%argument 2%} is set:
+							if {ma.staff.%argument 2%} is greater than or equal to {ma.staff.%player%}:
+								message "%{ma.prefix}%&4Cannot change that player's gamemode!"
+							else:
+								if {_type} is equal to 1:
+									if argument 1 is equal to "c":
+										set argument 2's gamemode to creative
+										message "%{ma.prefix}%&9Set %argument 2%'s gamemode to creative"
+									else if argument 1 is equal to "s":
+										set argument 2's gamemode to survival
+										message "%{ma.prefix}%&9Set %argument 2%'s gamemode to survival"
+									else if argument 1 is equal to "a":
+										set argument 2's gamemode to adventure
+										message "%{ma.prefix}%&9Set %argument 2%'s gamemode to adventure"
+									else:
+										message "%{ma.prefix}%&4That isn't a gamemode!"
+								else if {_type} is equal to 2:
+									if {_temp} is equal to 0:
+										set argument 2's gamemode to survival
+										message "%{ma.prefix}%&9Set %argument 2%'s gamemode to survival"
+									else if {_temp} is equal to 1:
+										set argument 2's gamemode to creative
+										message "%{ma.prefix}%&9Set %argument 2%'s gamemode to creative"
+									else if {_temp} is equal to 2:
+										set argument 2's gamemode to adventure
+										message "%{ma.prefix}%&9Set %argument 2%'s gamemode to adventure"
+									else:
+										message "%{ma.prefix}%&4That isn't a gamemode!"
+						else:
+							if {_type} is equal to 1:
+								if argument 1 is equal to "c":
+									set argument 2's gamemode to creative
+									message "%{ma.prefix}%&9Set %argument 2%'s gamemode to creative"
+								else if argument 1 is equal to "s":
+									set argument 2's gamemode to survival
+									message "%{ma.prefix}%&9Set %argument 2%'s gamemode to survival"
+								else if argument 1 is equal to "a":
+									set argument 2's gamemode to adventure
+									message "%{ma.prefix}%&9Set %argument 2%'s gamemode to adventure"
+								else:
+									message "%{ma.prefix}%&4that isn't a gamemode!"
+							else if {_type} is equal to 2:
+								if {_temp} is equal to 0:
+									set argument 2's gamemode to survival
+									message "%{ma.prefix}%&9Set %argument 2%'s gamemode to survival"
+								else if {_temp} is equal to 1:
+									set argument 2's gamemode to creative
+									message "%{ma.prefix}%&9Set %argument 2%'s gamemode to creative"
+								else if {_temp} is equal to 2:
+									set argument 2's gamemode to adventure
+									message "%{ma.prefix}%&9Set %argument 2%'s gamemode to adventure"
+								else:
+									message "%{ma.prefix}%&4That isn't a gamemode!"
+					else:
+						message "%{ma.prefix}%&4That player isn't online!"
+				else:
+					if {_type} is equal to 1:
+						if argument 1 is equal to "c":
+							set player's gamemode to creative
+							message "%{ma.prefix}%&9Set your gamemode to creative"
+						else if argument 1 is equal to "s":
+							set player's gamemode to survival
+							message "%{ma.prefix}%&9Set your gamemode to survival"
+						else if argument 1 is equal to "a":
+							set player's gamemode to adventure
+							message "%{ma.prefix}%&9Set your gamemode to adventure"
+						else:
+							message "%{ma.prefix}%&4That isn't a gamemode!"
+					else if {_type} is equal to 2:
+						if {_temp} is equal to 0:
+							set player's gamemode to survival
+							message "%{ma.prefix}%&9Set your gamemode to survival"
+						else if {_temp} is equal to 1:
+							set player's gamemode to creative
+							message "%{ma.prefix}%&9Set your gamemode to creative"
+						else if {_temp} is equal to 2:
+							set player's gamemode to adventure
+							message "%{ma.prefix}%&9Set your gamemode to adventure"
+						else:
+							message "%{ma.prefix}%&4That isn't a gamemode!"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			if argument 2 is set:
+				if argument 2 is online:
+					if {_type} is equal to 1:
+						if argument 1 is equal to "c":
+							set argument 2's gamemode to creative
+							message "%{ma.prefix}%&9Set %argument 2%'s gamemode to creative"
+						else if argument 1 is equal to "s":
+							set argument 2's gamemode to survival
+							message "%{ma.prefix}%&9Set %argument 2%'s gamemode to survival"
+						else if argument 1 is equal to "a":
+							set argument 2's gamemode to adventure
+							message "%{ma.prefix}%&9Set %argument 2%'s gamemode to adventure"
+						else:
+							message "%{ma.prefix}%&4That isn't a gamemode!"
+					else if {_type} is equal to 2:
+						if {_temp} is equal to 0:
+							set argument 2's gamemode to survival
+							message "%{ma.prefix}%&9Set %argument 2%'s gamemode to survival"
+						else if {_temp} is equal to 1:
+							set argument 2's gamemode to creative
+							message "%{ma.prefix}%&9Set %argument 2%'s gamemode to creative"
+						else if {_temp} is equal to 2:
+							set argument 2's gamemode to adventure
+							message "%{ma.prefix}%&9Set %argument 2%'s gamemode to adventure"
+						else:
+							message "%{ma.prefix}%&4That isn't a gamemode!"
+				else:
+					message "%{ma.prefix}%&4That player isn't online!"
+			else:
+				message "%{ma.prefix}%&4Specify the player!"
+		stop trigger

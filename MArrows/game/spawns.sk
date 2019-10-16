@@ -1,0 +1,23 @@
+command /setspawn <text> <integer>:
+	description: Sets spawns for maps
+	usage: /setspawn <map name> <spawn number>
+	executable by: players
+	trigger:
+		if {ma.staff.%player%} is set:
+			if {ma.staff.%player%} is greater than or equal to 2:
+				if argument 1 is equal to {ma.map.%argument 1%}:
+					if argument 2 is less than or equal to {ma.max.spawns}:
+						if argument 2 is greater than or equal to 1:
+							set {ma.map.%argument 1%.spawn.%argument 2%} to player's location
+							message "%{ma.prefix}%&9Set the spawn point %argument 2% of %argument 1% to your location"
+						else:
+							message "%{ma.prefix}%&4Spawns can only be 1-%{ma.max.spawns}%"
+					else:
+						message "%{ma.prefix}%&4Spawns can only be 1-%{ma.max.spawns}%"
+				else:
+					message "%{ma.prefix}%&4Not a valid map!"
+			else:
+				message "%{ma.prefix}%&4Get an admin+ to do this!"
+		else:
+			message "%{ma.prefix}%&4No permission"
+		stop trigger

@@ -1,0 +1,76 @@
+on join:
+	if {ma.staff.%player%} is not set:
+		teleport player to {ma.spawn}
+	if player does not have a note block named "Game Select":
+		give a note block named "Game Select" to the player
+	execute console command "/upactive %player%"
+	if {ma.staff.%player%} is set:
+		if {ma.staff.%player%} is equal to 1:
+			set tablist name of player to "%{ma.color.mod}%%player%"
+			set join message to "&7[&a+&7] %{ma.prefix.mod}%%{ma.color.mod}%%player%"
+		else if {ma.staff.%player%} is equal to 2:
+			set tablist name of player to "%{ma.color.admin}%%player%"
+			set join message to "&7[&a+&7] %{ma.prefix.admin}%%{ma.color.admin}%%player%"
+		else if {ma.staff.%player%} is equal to 3:
+			set tablist name of player to "%{ma.color.owner}%%player%"
+			set join message to "&7[&a+&7] %{ma.prefix.owner}%%{ma.color.owner}%%player%"
+	else if {ma.level.%player%} is set:
+		if {ma.level.%player%} is equal to 2:
+			set tablist name of player to "%{ma.color.l2}%%player%"
+			set join message to "&7[&a+&7] %{ma.color.l2}%%player%"
+		else if {ma.level.%player%} is equal to 3:
+			set tablist name of player to "%{ma.color.l3}%%player%"
+			set join message to "&7[&a+&7] %{ma.color.l3}%%player%"
+		else if {ma.level.%player%} is equal to 4:
+			set tablist name of player to "%{ma.color.l4}%%player%"
+			set join message to "&7[&a+&7] %{ma.color.l4}%%player%"
+		else if {ma.level.%player%} is equal to 5:
+			set tablist name of player to "%{ma.color.l5}%%player%"
+			set join message to "&7[&a+&7] %{ma.color.l5}%%player%"
+		else if {ma.level.%player%} is equal to 6:
+			set tablist name of player to "%{ma.color.l6}%%player%"
+			set join message to "&7[&a+&7] %{ma.color.l6}%%player%"
+		else if {ma.level.%player%} is equal to 7:
+			set tablist name of player to "%{ma.color.l7}%%player%"
+			set join message to "&7[&a+&7] %{ma.color.l7}%%player%"
+		else if {ma.level.%player%} is equal to 8:
+			set tablist name of player to "%{ma.color.l8}%%player%"
+			set join message to "&7[&a+&7] %{ma.color.l8}%%player%"
+	else:
+		set tablist name of player to "%{ma.color.l1}%%player%"
+		set join message to "&7[&a+&7] %{ma.color.l1}%%player%"
+	execute console command "/nt %player%"
+	execute console command "/lobbyscoreboard %player%"
+	
+command /spawn [<player>]:
+	description: Teleports a player to the spawn point
+	usage: /spawn [<player>]
+	aliases: /lobby
+	executable by: players and console
+	trigger:
+		if argument 1 is not set:
+			player is set:
+				message "%{ma.prefix}%&8To spawn!"
+				if {ma.player.%player%} is set:
+					make player execute command "/leave"
+				teleport player to {ma.spawn}
+			else:
+				message "Whatcha doin' console?"
+		else if argument 1 is set:
+			if player is set:
+				if {ma.staff.%player%} exists:
+					if {ma.staff.%argument 1%} is equal to 3:
+						message "&4No permissions to teleport an owner"
+					else:
+						if {ma.player.%argument 1%} is set:
+							make player execute command "/leave"
+						teleport argument 1 to {ma.spawn}
+				else:
+					message "&4No permission"
+					stop trigger
+			else:
+				if {ma.player.%argument 1%} is set:
+					make player execute command "/leave"
+				teleport argument 1 to {ma.spawn}
+				send "%{ma.prefix}%&8To spawn!" to argument 1
+		stop trigger

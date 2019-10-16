@@ -1,0 +1,79 @@
+command /msg <player> <text>:
+	description: Sends a message to the player
+	usage: /msg <player> <message>
+	executable by: players
+	aliases: /m, /tell, /t
+	trigger:
+		if {ma.staff.%player%} is set:
+			if {ma.staff.%player%} is equal to 1:
+				set {_prefix} to "%{ma.prefix.mod}%"
+			else if {ma.staff.%player%} is equal to 2:
+				set {_prefix} to "%{ma.prefix.admin}%"
+			else:
+				set {_prefix} to "%{ma.prefix.owner}%"
+		else:
+			set {_prefix} to ""
+		if {ma.staff.%argument 1%} is set:
+			if {ma.staff.%argument 1%} is equal to 1:
+				set {_prefix.a} to "%{ma.prefix.mod}%"
+			else if {ma.staff.%argument 1%} is equal to 2:
+				set {_prefix.a} to "%{ma.prefix.admin}%"
+			else:
+				set {_prefix.a} to "%{ma.prefix.owner}%"
+		else:
+			set {_prefix.a} to ""
+		if argument 2 contains "&":
+			if {ma.staff.%player%} is set:
+				set {_text} to colored argument 2
+			else:
+				set {_text} to argument 2
+		else:
+			set {_text} to argument 2
+		send "&6[%{_prefix}%&f%player% &6--> &f%{_prefix.a}%%argument 1%&6] &f%{_text}%" to argument 1
+		message "&6[%{_prefix}%&f%player% &6--> &f%{_prefix.a}%%argument 1%&6] &f%{_text}%"
+		set {ma.msg.%player%} to argument 1
+		set {ma.msg.%argument 1%} to command sender
+		stop trigger
+		
+command /reply <text>:
+	description: Replies to a message
+	usage: /r <message>
+	executable by: players
+	aliases: /r
+	trigger:
+		if {ma.msg.%player%} is set:
+			if {ma.msg.%player%} is online:
+				if {ma.staff.%player%} is set:
+					if {ma.staff.%player%} is equal to 1:
+						set {_prefix} to "%{ma.prefix.mod}%"
+					else if {ma.staff.%player%} is equal to 2:
+						set {_prefix} to "%{ma.prefix.admin}%"
+					else:
+						set {_prefix} to "%{ma.prefix.owner}%"
+				else:
+					set {_prefix} to ""
+				if {ma.staff.%{ma.msg.%player%}%} is set:
+					if {ma.staff.%{ma.msg.%player%}%} is equal to 1:
+						set {_prefix.a} to "%{ma.prefix.mod}%"
+					else if {ma.staff.%{ma.msg.%player%}%} is equal to 2:
+						set {_prefix.a} to "%{ma.prefix.admin}%"
+					else:
+						set {_prefix.a} to "%{ma.prefix.owner}%"
+				else:
+					set {_prefix.a} to ""
+				if argument 1 contains "&":
+					if {ma.staff.%player%} is set:
+						set {_text} to colored argument 1
+					else:
+						set {_text} to argument 1
+				else:
+					set {_text} to argument 1
+				send "&6[%{_prefix}%&f%player% &6--> &f%{_prefix.a}%%{ma.msg.%player%}%&6] &f%{_text}%" to {ma.msg.%player%}
+				message "&6[%{_prefix}%&f%player% &6--> &f%{_prefix.a}%%{ma.msg.%player%}%&6] &f%{_text}%"
+				set {ma.msg.%{ma.msg.%player%}%} to player
+			else:
+				delete {ma.msg.%player%}
+				message "%{ma.prefix}%&4Nobody to reply to"
+		else:
+			message "%{ma.prefix}%&4Nobody to reply to"
+		stop trigger

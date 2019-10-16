@@ -1,0 +1,4 @@
+on script unload:
+	loop all players:
+		if {ma.player.%loop-player%} is set:
+			make loop-player execute command "/leave"

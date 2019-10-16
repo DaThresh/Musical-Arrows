@@ -1,0 +1,4 @@
+on drop:
+	if {ma.player.%player%} is set:
+		cancel event
+	stop trigger

@@ -1,0 +1,65 @@
+command /gitems <player>:
+	description: Gives the player their game items
+	usage: /gitems <player>
+	aliases: /gitem
+	executable by: console
+	trigger:
+		set {_player} to player argument
+		clear the inventory of {_player}
+		if {ma.player.%{_player}%} is set:
+			if {ma.level.%{_player}%} is set:
+				if {ma.level.%{_player}%} is equal to 2:
+					give {_player} 1 mellohi disc
+				else if {ma.level.%{_player}%} is equal to 3:
+					give {_player} 1 strad disc
+				else if {ma.level.%{_player}%} is equal to 4:
+					give {_player} 1 wait disc
+				else if {ma.level.%{_player}%} is equal to 5:
+					give {_player} 1 ward disc
+				else if {ma.level.%{_player}%} is equal to 6:
+					give {_player} 1 mall disc
+				else if {ma.level.%{_player}%} is equal to 7:
+					give {_player} 1 chirp disc
+			else:
+				give {_player} 1 cat disc
+			if {ma.donor.%{_player}%} is set:
+				if {ma.donor.%{_player}%} contains "a":
+					give {_player} 1 jukebox
+				else:
+					give {_player} 1 note block
+			else:
+				give {_player} 1 note block
+			if {ma.upgrade.arrows.%{_player}%} is set:
+				if {ma.upgrade.arrows.%{_player}%} is equal to 1:
+					give {_player} 192 arrows
+				else:
+					give {_player} 256 arrows
+			else:
+				give {_player} 128 arrows
+			if {ma.upgrade.head.%{_player}%} is set:
+				if {ma.upgrade.head.%{_player}%} is equal to 1:
+					equip {_player} with iron helmet
+				else:
+					equip {_player} with gold helmet
+			if {ma.upgrade.chest.%{_player}%} is set:
+				if {ma.upgrade.chest.%{_player}%} is equal to 1:
+					equip {_player} with iron chestplate
+				else:
+					equip {_player} with gold chestplate
+			if {ma.upgrade.legs.%{_player}%} is set:
+				if {ma.upgrade.legs.%{_player}%} is equal to 1:
+					equip {_player} with iron leggings
+				else:
+					equip {_player} with gold leggings
+			if {ma.upgrade.feet.%{_player}%} is set:
+				if {ma.upgrade.feet.%{_player}%} is equal to 1:
+					equip {_player} with iron boots
+				else:
+					equip {_player} with gold boots
+			if {ma.voted.%{_player}%} is set:
+				if {ma.voted.%{_player}%} is greater than or equal to 12:
+					give {_player} 2 nether stars
+				else:
+					give {_player} 1 nether star
+		else:
+			message "%{ma.prefix}%&4That player isn't in a game!"

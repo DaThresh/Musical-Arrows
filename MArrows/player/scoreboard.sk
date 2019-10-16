@@ -1,0 +1,30 @@
+command /lobbyscoreboard <player>:
+	description: Makes the player have the scoreboard in the lobby -CONSOLE-
+	usage: /lobbyscoreboard <player>
+	executable by: console
+	trigger:
+		display scoreboard named "&6Musical Arrows" to argument 1
+		make score of "&aKills" in scoreboard of argument 1 to {ma.kills.%argument 1%}
+		make score of "&cDeaths" in scoreboard of argument 1 to {ma.deaths.%argument 1%}
+		if {ma.level.%argument 1%} is set:
+			make score of "&9Level" in scoreboard of argument 1 to {ma.level.%argument 1%}
+		else:
+			make score of "&9Level" in scoreboard of argument 1 to 1
+		make score of "&3Coins" in scoreboard of argument 1 to {ma.coins.%argument 1%}
+		move display of argument 1 to "sidebar"
+		
+command /gamescoreboard <player>:
+	description: Makes the player have the scoreboard in game
+	usage: /gamescoreboard <player>
+	executable by: console
+	trigger:
+		display scoreboard named "&6%{ma.map.%{ma.match.%{ma.player.%player-argument%}%.map}%}%" to argument 1
+		loop all players:
+			if {ma.player.%loop-player%} is equal to {ma.player.%player-argument%}:
+				if loop-player is not equal to player-argument:
+					make score of "%loop-player%" in scoreboard of argument 1 to {ma.score.%loop-player%}
+		if {ma.level.%player-argument%} is not set:
+			make score of "%{ma.color.l1}%%player-argument%" in scoreboard of argument 1 to {ma.score.%player-argument%}
+		else:
+			make score of "%{ma.color.l%{ma.level.%player-argument%}%}%%player-argument%" in scoreboard of argument 1 to {ma.score.%player-argument%}
+		move display of argument 1 to "sidebar"

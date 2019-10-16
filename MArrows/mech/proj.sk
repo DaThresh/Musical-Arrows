@@ -1,0 +1,121 @@
+on projectile hit:
+	delete projectile
+	
+on shoot:
+	if projectile is arrow:
+		trail projectile with "note"
+		
+on right click with nether star:
+	if {ma.player.%player%} is set:
+		make player shoot item projectile of green music disc named "%player%" at speed 10
+		remove 1 nether star from the player
+		
+on item hit:
+	if event-item is a green music disc:
+		play 1500 of effect "note" with data 1 at event-location offset by 5
+		set {_attacker} to "%event-entity%"
+		loop players in radius 5 of event-location:
+			if {ma.player.%loop-player-1%} is set:
+				if {ma.player.%loop-player-1%} is equal to {ma.player.%{_attacker}%}:
+					if loop-player-1 is not equal to {_attacker}:
+						set {_damage} to 1000
+						if {ma.upgrade.head.%loop-player-1%} is set:
+							if {ma.upgrade.head.%loop-player-1%} is equal to 1:
+								subtract 25 from {_damage}
+							else:
+								subtract 50 from {_damage}
+						if {ma.upgrade.chest.%loop-player-1%} is set:
+							if {ma.upgrade.chest.%loop-player-1%} is equal to 1:
+								subtract 25 from {_damage}
+							else:
+								subtract 50 from {_damage}
+						if {ma.upgrade.legs.%loop-player-1%} is set:
+							if {ma.upgrade.legs.%loop-player-1%} is equal to 1:
+								subtract 25 from {_damage}
+							else:
+								subtract 50 from {_damage}
+						if {ma.upgrade.feet.%loop-player-1%} is set:
+							if {ma.upgrade.feet.%loop-player-1%} is equal to 1:
+								subtract 25 from {_damage}
+							else:
+								subtract 50 from {_damage}
+						if {ma.skill.resistance.%loop-player-1%} is set:
+							if {ma.skill.resistance.%loop-player-1%} is equal to 1:
+								subtract 50 from {_damage}
+							else:
+								subtract 100 from {_damage}
+						if {_damage} is greater than or equal to 960:
+							set {_points} to 6
+						else if {_damage} is greater than or equal to 910:
+							set {_points} to 5
+						else if {_damage} is greater than or equal to 800:
+							set {_points} to 4.5
+						else if {_damage} is greater than or equal to 690:
+							set {_points} to 4
+						else:
+							set {_points} to 4
+						if loop-player-1's health - {_points} is less than or equal to 0:
+							send "%{ma.prefix}%&aKilled %loop-player-1%!" to {_attacker}
+							send "%{ma.prefix}%&cKilled by %{_attacker}%" to loop-player-1
+							add 1 to {ma.kills.%{_attacker}%}
+							add 1 to {ma.deaths.%loop-player-1%}
+							if {ma.multiplier.coin.user.%{_attacker}%} is set:
+								if {ma.multiplier.coin.user.%{_attacker}%} is greater than {ma.multiplier.coin}:
+									add {ma.multiplier.coin.user.%{_attacker}%} * {ma.value.coins.kill} to {ma.coins.%{_attacker}%}
+								else:
+									add {ma.multiplier.coin} * {ma.value.coins.kill} to {ma.coins.%{_attacker}%}
+							else:
+								add {ma.value.coins.kill} * {ma.multiplier.coin} to {ma.coins.%{_attacker}%}
+							if {ma.multiplier.xp.user.%{_attacker}%} is set:
+								if {ma.multiplier.xp.user.%{_attacker}%} is greater than {ma.multiplier.xp}:
+									add {ma.multiplier.xp.user.%{_attacker}%} * {ma.value.xp.kill} to {ma.xp.%{_attacker}%}
+								else:
+									add {ma.multiplier.xp} * {ma.value.xp.kill} to {ma.xp.%{_attacker}%}
+							else:
+								add {ma.value.xp.kill} * {ma.multiplier.xp} to {ma.xp.%{_attacker}%}
+							heal the loop-player-1
+							set {_num} to a random integer between 1 and {ma.max.spawns}
+							teleport loop-player-1 to {ma.map.%{ma.match.%{ma.player.%loop-player-1%}%.map}%.spawn.%{_num}%}
+							play "LAVA_POP" at loop-player-1's location with pitch 1
+							clear the inventory of the loop-player-1
+							execute console command "/gitems %loop-player-1%"
+							execute console command "/xpcheck %{_attacker}%"
+							add 1 to {ma.score.%{_attacker}%}
+							loop all players:
+								if {ma.player.%loop-player-2%} is equal to {ma.player.%{_attacker}%}:
+									execute console command "/gamescoreboard %loop-player-2%"
+							if {ma.score.%{_attacker}%} is equal to {ma.end.kills}:
+								add 1 to {ma.wins.%{_attacker}%}
+								if {ma.multiplier.coin.user.%{_attacker}%} is set:
+									if {ma.multiplier.coin.user.%{_attacker}%} is greater than {ma.multiplier.coin}:
+										add {ma.value.coins.win} * {ma.multiplier.coin.user.%{_attacker}%} to {ma.coins.%{_attacker}%}
+									else:
+										add {ma.value.coins.win} * {ma.multiplier.coin} to {ma.coins.%{_attacker}%}
+								else:
+									add {ma.value.coins.win} * {ma.multiplier.coin} to {ma.coins.%{_attacker}%}
+								if {ma.multiplier.xp.user.%{_attacker}%} is set:
+									if {ma.multiplier.xp.user.%{_attacker}%} is greater than {ma.multiplier.xp}:
+										add {ma.value.xp.win} * {ma.multiplier.xp.user.%{_attacker}%} to {ma.xp.%{_attacker}%}
+									else:
+										add {ma.value.xp.win} * {ma.multiplier.xp} to {ma.xp.%{_attacker}%}
+								else:
+									add {ma.value.xp.win} * {ma.multiplier.xp} to {ma.xp.%{_attacker}%}
+								loop all players:
+									if {ma.player.%loop-player-2%} is equal to {ma.player.%{_attacker}%}:
+										send "%{ma.prefix}%&f%{_attacker}% &9has won the game!" to loop-player-2
+										if loop-player-2 is not equal to {_attacker}:
+											add 1 to {ma.losses.%loop-player-2%}
+								set {ma.map.%{ma.match.%{ma.player.%loop-player-1%}%.map}%.status} to 5
+							else:
+								set {ma.cooldown.%loop-player-1%} to 5
+								set {_temp.map} to {ma.match.%{ma.player.%loop-player-1%}%.map}
+								while {ma.cooldown.%loop-player-1%} is set:
+									wait 1 second
+									if {ma.match.%{ma.player.%loop-player-1%}%.map} is equal to {_temp.map}:
+										subtract 1 from {ma.cooldown.%loop-player-1%}
+										if {ma.cooldown.%loop-player-1%} is equal to 0:
+											delete {ma.cooldown.%loop-player-1%}
+									else:
+										delete {ma.cooldown.%loop-player-1%}
+						else:
+							damage the loop-player-1 by {_points} hearts

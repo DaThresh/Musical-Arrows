@@ -1,0 +1,16 @@
+command /setwarp <text>:
+	description: Sets a warp
+	usage: /setwarp <name>
+	executable by: players
+	trigger:
+		if {ma.staff.%player%} is set:
+			if {ma.player.%player%} is not set:
+				if {ma.warp.%argument 1%} is not set:
+					set {ma.warp.%argument 1%} to player's location
+					add argument 1 to {ma.list.warp::*}
+					message "%{ma.prefix}%&9Set warp %argument 1% to your location!"
+				else:
+					message "%{ma.prefix}%&4That warp already exists!"
+			else:
+				message "%{ma.prefix}%&4Cannot set a warp in game!"
+		stop trigger

@@ -1,0 +1,8 @@
+on rightclick:
+	if player is holding a note block:
+		if name of the held item is "Game Select":
+			cancel event
+			show "s;5;i;mellohi music disc;n;&6Match 1;l;Join match 1 (%{ma.match.1.players}%/%{ma.max.players}%);c;insert %player% 1" with 1 row named "&2Games" to player
+	else if player is holding a firework star:
+		play 1500 of effect "note" with data 1 at player's location offset by 5
+	stop trigger

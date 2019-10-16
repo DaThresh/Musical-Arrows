@@ -1,0 +1,6 @@
+on leftclick with a note block:
+	if {ma.player.%player%} is set:
+		if {ma.player.%clicked player%} is set:
+			cancel event
+			damage clicked player by 5 hearts
+	stop trigger

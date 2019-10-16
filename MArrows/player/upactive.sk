@@ -1,0 +1,15 @@
+command /upactive <player>:
+	description: Assigns players their jump and speed upgrades
+	usage: /upactive <player>
+	executable by: console
+	trigger:
+		if {ma.upgrade.speed.%player-argument%} is not set:
+			apply potion of speed of tier 5 to the player-argument for 999 days
+		else:
+			set {_tier} to 5 + {ma.upgrade.speed.%player-argument%}
+			apply potion of speed of tier {_tier} to the player-argument for 999 days
+		if {ma.upgrade.hops.%player-argument%} is not set:
+			apply potion of jump of tier 3 to the player-argument for 999 days
+		else:
+			set {_tier} to 3 + {ma.upgrade.hops.%player-argument%}
+			apply potion of jump of tier {_tier} to the player-argument for 999 days

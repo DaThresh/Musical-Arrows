@@ -1,0 +1,11 @@
+on first join:
+	broadcast "%{ma.prefix}%&9Welcome to Musical Arrows, &a%player%&9!"
+	set {ma.kills.%player%} to 0
+	set {ma.deaths.%player%} to 0
+	set {ma.wins.%player%} to 0
+	set {ma.losses.%player%} to 0
+	set {ma.coins.%player%} to 0
+	set {ma.xp.%player%} to 0
+	set {ma.skill.%player%} to 0
+	set player nametag to "%{ma.color.l1}%%player%"
+	stop trigger

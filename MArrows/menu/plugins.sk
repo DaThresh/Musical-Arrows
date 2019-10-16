@@ -1,0 +1,13 @@
+command /plugins:
+	description: Shows the plugins of the server
+	usage: /plugins
+	aliases: /pl
+	executable by: players and console
+	trigger:
+		if player is set:
+			if {ma.staff.%player%} is set:
+				message "&fPlugins (7): &aMusicalArrows&f, &aWorldEdit&f, &aNoteBlockAPI&f, &aTagAPI&f, &aMcMusic&f, &aBuycraft&f, &aNoCheatPlus"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			send "&fPlugins (7): &aMusicalArrows&f, &aWorldEdit&f, &aNoteBlockAPI&f, &aTagAPI&f, &aMcMusic&f, &aBuycraft&f, &aNoCheatPlus" to console

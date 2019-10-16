@@ -1,0 +1,7 @@
+on place:
+	if {ma.player.%player%} is set:
+		cancel event
+	else:
+		if {ma.staff.%player%} is not set:
+			cancel event
+	stop trigger

@@ -1,0 +1,37 @@
+command /leaderboardupdate <offline player>:
+	description: Updates the leaderboard
+	usage: /leaderboardupdate <player>
+	executable by: console
+	trigger:
+		set {_new} to false
+		set {_nu} to 1
+		loop 15 times:
+			if {ma.kills.%argument 1%} is greater than {ma.leaderboard.%{_nu}%.kills}:
+				set {_temp} to 15
+				loop 15 times:
+					if {ma.leaderboard.%{_temp}%.player} is equal to "%argument 1%":
+						set {_bad} to {_temp}
+					subtract 1 from {_temp}
+				if {_temp} is greater than {_nu}:
+					set {_t} to 15-{_bad}
+					set {_last} to 15
+					loop {_t} times:
+						set {ma.leaderboard.%{_last}+1%.player} to {ma.leaderboard.%{_last}%.player}
+						set {ma.leaderboard.%{_last}+1%.kills} to {ma.leaderboard.%{_last}%.kills}
+						subtract 1 from {_last}
+					set {ma.leaderboard.%{_bad}%.player} to "%argument 1%"
+					set {ma.leaderboard.%{_bad}%.kills} to {ma.kills.%argument 1%}
+					set {_new} to true
+				else:
+					if {ma.leaderboard.%{_bad}%.kills} is less than {ma.kills.%argument 1%}:
+						set {_new} to true
+		if {_new} is equal to true:
+			set {_num} to 0
+			loop {ma.lb.sign::*}:
+				set {_temp} to line 2 of block at location of loop-value
+				if {_temp} contains "&e&l":
+					replace "&e&l" with "" in {_temp}
+				set {_num} to {_temp} parsed as an integer
+				set line 3 of block at location of loop-value to {ma.leaderboard.%{_num}%.player}
+				set line 4 of block at location of loop-value to "%{ma.leaderboard.%{_num}%.kills}%"
+		stop trigger

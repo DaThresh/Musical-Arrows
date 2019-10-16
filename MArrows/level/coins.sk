@@ -1,0 +1,26 @@
+command /coins [<text>]:
+	description: Tells you your coins
+	usage: /coins [<player>]
+	aliases: /coin
+	executable by: players and console
+	trigger:
+		if player is set:
+			if argument 1 is set:
+				if {ma.coins.%argument 1%} is set:
+					if argument 1 is equal to command sender:
+						message "%{ma.prefix}%&fYou have &3%{ma.coins.%player%}% &fcoins"
+					else:
+						message "%{ma.prefix}%&f%argument 1% has &3%{ma.coins.%argument 1%}% &fcoins"
+				else:
+					message "%{ma.prefix}%&4That person has never played before!"
+			else:
+				message "%{ma.prefix}%&fYou have &3%{ma.coins.%player%}% &fcoins"
+		else:
+			if argument 1 is not set:
+				message "%{ma.prefix}%&4Specify a player!"
+			else:
+				if {ma.coins.%argument 1%} is set:
+					message "%{ma.prefix}%&f%argument 1% has &3%{ma.coins.%argument 1%}% &fcoins"
+				else:
+					message "%{ma.prefix}%&4That person has never played before!"
+		stop trigger

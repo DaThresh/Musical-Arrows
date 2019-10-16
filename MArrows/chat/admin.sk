@@ -1,0 +1,19 @@
+command /a [<text>]:
+	description: Admin chat control
+	usage: /a [<message>]
+	trigger:
+		if {ma.staff.%player%} is greater than or equal to 2:
+			if argument 1 is set:
+				loop all players:
+					if {ma.staff.%loop-player%} is greater than or equal to 2:
+						send "&b[&f%player%&b] %argument 1%" to loop-player
+			else:
+				if {ma.achat.%player%} is equal to true:
+					delete {ma.achat.%player%}
+					message "%{ma.prefix}%&9Admin chat turned off"
+				else:
+					set {ma.achat.%player%} to true
+					message "%{ma.prefix}%&9Admin chat turned on"
+		else:
+			message "%{ma.prefix}%&4No permission"
+		stop trigger

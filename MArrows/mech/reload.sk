@@ -1,0 +1,80 @@
+command /ma reload [<text>]:
+	description: Reloads the Musical Arrows plugin
+	usage: /ma reload [<config/chat/game/leaderboard/level/mech/menu/player/warp>]
+	executable by: players and console
+	trigger:
+		if player is set:
+			if {ma.staff.%player%} is set:
+				if {ma.staff.%player%} is greater than or equal to 2:
+					if argument 1 is set:
+						if argument 1 is equal to "config":
+							execute console command "/skript reload MArrows/loads"
+							message "%{ma.prefix}%&9Reloaded the config!"
+						else if argument 1 is equal to "chat":
+							execute console command "/skript reload MArrows/Chat/"
+							message "%{ma.prefix}%&9Reloaded the chat files!"
+						else if argument 1 is equal to "game":
+							execute console command "/skript reload MArrows/game/"
+							message "%{ma.prefix}%&9Reloaded the game files!"
+						else if argument 1 is equal to "leaderboard":
+							execute console command "/skript reload MArrows/leaderboard/"
+							message "%{ma.prefix}%&9Reloaded the leaderboard files!"
+						else if argument 1 is equal to "level":
+							execute console command "/skript reload MArrows/level/"
+							message "%{ma.prefix}%&9Reloaded the level files!"
+						else if argument 1 is equal to "mech":
+							execute console command "/skript reload MArrows/mech/"
+							message "%{ma.prefix}%&9Reloaded the mech files!"
+						else if argument 1 is equal to "menu":
+							execute console command "/skript reload MArrows/menu/"
+							message "%{ma.prefix}%&9Reloaded the menu files!"
+						else if argument 1 is equal to "player":
+							execute console command "/skript reload MArrows/player/"
+							message "%{ma.prefix}%&9Reloaded the player files!"
+						else if argument 1 is equal to "warp":
+							execute console command "/skript reload MArrows/warp/"
+							message "%{ma.prefix}%&9Reloaded the warp files!"
+						else:
+							message "%{ma.prefix}%&9Invalid reload!"
+					else:
+						execute console command "/skript reload MArrows/"
+						message "%{ma.prefix}%&9Reloaded!"
+				else:
+					message "%{ma.prefix}%&4Tell an admin+ to do this!"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			if argument 1 is set:
+				if argument 1 is equal to "config":
+					execute console command "/skript reload MArrows/loads"
+					message "%{ma.prefix}%&9Reloaded the config!"
+				else if argument 1 is equal to "chat":
+					execute console command "/skript reload MArrows/Chat/"
+					message "%{ma.prefix}%&9Reloaded the chat files!"
+				else if argument 1 is equal to "game":
+					execute console command "/skript reload MArrows/game/"
+					message "%{ma.prefix}%&9Reloaded the game files!"
+				else if argument 1 is equal to "leaderboard":
+					execute console command "/skript reload MArrows/leaderboard/"
+					message "%{ma.prefix}%&9Reloaded the leaderboard files!"
+				else if argument 1 is equal to "level":
+					execute console command "/skript reload MArrows/level/"
+					message "%{ma.prefix}%&9Reloaded the level files!"
+				else if argument 1 is equal to "mech":
+					execute console command "/skript reload MArrows/mech/"
+					message "%{ma.prefix}%&9Reloaded the mech files!"
+				else if argument 1 is equal to "menu":
+					execute console command "/skript reload MArrows/menu/"
+					message "%{ma.prefix}%&9Reloaded the menu files!"
+				else if argument 1 is equal to "player":
+					execute console command "/skript reload MArrows/player/"
+					message "%{ma.prefix}%&9Reloaded the player files!"
+				else if argument 1 is equal to "warp":
+					execute console command "/skript reload MArrows/warp/"
+					message "%{ma.prefix}%&9Reloaded the warp files!"
+				else:
+					message "%{ma.prefix}%&9Invalid reload!"
+			else:
+				execute console command "/skript reload MArrows/"
+				message "%{ma.prefix}%&9Reloaded!"
+		stop trigger

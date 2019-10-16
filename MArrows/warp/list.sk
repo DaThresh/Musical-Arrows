@@ -1,0 +1,13 @@
+command /warplist:
+	description: List of all warps
+	usage: /warplist
+	executable by: players and console
+	trigger:
+		if {ma.staff.%player%} is set:
+			if {ma.list.warp::*} is set:
+				message "%{ma.prefix}%&6Warps: &f%{ma.list.warp::*}%"
+			else:
+				message "%{ma.prefix}%&4No warps yet"
+		else:
+			message "%{ma.prefix}%&4No permission"
+		stop trigger

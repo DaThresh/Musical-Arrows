@@ -1,0 +1,10 @@
+on rightclick with any music disc:
+	if {ma.player.%player%} is set:
+		cancel event
+		if {ma.cooldown.%player%} is set:
+			delete {ma.cooldown.%player%}
+		play "NOTE_SNARE_DRUM" at player's location with pitch 1
+		if player has 1 arrow:
+			make the player shoot an arrow at speed 10
+			remove 1 arrow from the player
+	stop trigger

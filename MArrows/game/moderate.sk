@@ -1,0 +1,92 @@
+command /moderate <integer> <boolean>:
+	description: Moderates a match
+	usage: /moderate <match number> <true/false>
+	executable by: console
+	trigger:
+		if argument 2 is equal to true:
+			loop all players:
+				if {ma.player.%loop-player%} is equal to argument 1:
+					send "%{ma.prefix}%&9Switching maps..." to loop-player
+			execute console command "/matchselect %argument 1%"
+			loop all players:
+				if {ma.player.%loop-player%} is equal to argument 1:
+					set {_r} to random integer between 1 and {ma.max.spawns}
+					teleport loop-player to {ma.map.%{ma.match.%argument 1%.map}%.spawn.%{_r}%}
+					heal the loop-player
+					set {ma.score.%loop-player%} to 0
+					send "%{ma.prefix}%&9Now playing on &f%{ma.match.%argument 1%.map}%" to loop-player
+			loop all players:
+				if {ma.player.%loop-player%} is equal to argument 1:
+					execute console command "/gamescoreboard %loop-player%"
+			if {ma.match.%argument 1%.players} is greater than or equal to {ma.min.players}:
+				execute console command "/moderate %argument 1% false"
+				stop trigger
+			else:
+				loop all players:
+					if {ma.player.%loop-player%} is equal to argument 1:
+						send "%{ma.prefix}%&9Waiting for players..." to loop-player
+				execute console command "/moderate %argument 1% false"
+			stop trigger
+		else:
+			if {ma.match.%argument 1%.players} is less than {ma.min.players}:
+				if {_e} is set:
+					delete {_e}
+				set {_num} to 1
+				while {_e} is not set:
+					wait 2 seconds
+					if {ma.match.%argument 1%.players} is greater than or equal to {ma.min.players}:
+						set {_e} to 2
+						exit loop
+					if {ma.match.%argument 1%.players} is equal to 0:
+						set {_e} to 1
+						exit loop
+					if {_num} is divisible by 5:
+						loop all players:
+							if {ma.player.%loop-player%} is equal to argument 1:
+								send "%{ma.prefix}%&9Waiting for players..." to loop-player
+					add 1 to {_num}
+				if {_e} is equal to 2:
+					set {_num} to 5
+					if {_abc} is set:
+						delete {_abc}
+					loop 5 times:
+						loop all players:
+							if {ma.player.%loop-player%} is equal to argument 1:
+								send "%{ma.prefix}%&9Game starting is %{_num}%..." to loop-player
+						wait 1 second
+						subtract 1 from {_num}
+						if {ma.match.%argument 1%.players} is less than {ma.min.players}:
+							set {_abc} to 1
+							exit loop
+					if {_abc} is not set:
+						loop all players:
+							if {ma.player.%loop-player%} is equal to argument 1:
+								send "%{ma.prefix}%&9The game has &fstarted&9!" to loop-player
+						set {ma.map.%{ma.match.%argument 1%.map}%.status} to 1
+						execute console command "/run %argument 1%"
+					else:
+						loop all players:
+							if {ma.player.%loop-player%} is equal to argument 1:
+								send "%{ma.prefix}%&4Too few players.  Waiting for players..." to loop-player
+						execute console command "/moderate %argument 1% false"
+				else:
+					set {_tmap} to {ma.match.%argument 1%.map}
+					set {ma.map.%{_tmap}%.status} to 0
+					delete {ma.match.%argument 1%.map}
+					if {_e} is equal to 1:
+						delete {_e}
+			else:
+				set {_num} to 5
+				loop 5 times:
+					wait 1 second
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&9Game starting in %{_num}%..." to loop-player
+					subtract 1 from {_num}
+				wait 1 second
+				loop all players:
+					if {ma.player.%loop-player%} is equal to argument 1:
+						send "%{ma.prefix}%&9The game has &fstarted&9!" to loop-player
+				set {ma.map.%{ma.match.%argument 1%.map}%.status} to 1
+				execute console command "/run %argument 1%"
+		stop trigger

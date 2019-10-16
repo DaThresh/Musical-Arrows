@@ -1,0 +1,7 @@
+on quit:
+	set logout message to "&7[&c-&7] &c%player%"
+	if {ma.player.%player%} is set:
+		make player execute command "/leave"
+	if {ma.msg.%player%} is set:
+		delete {ma.msg.%player%}
+	stop trigger

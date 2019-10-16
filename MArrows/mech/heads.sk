@@ -1,0 +1,11 @@
+command /head <offline player>:
+	description: Gives a head of the player
+	usage: /head <player>
+	executable by: players
+	trigger:
+		if {ma.staff.%player%} is set:
+			give player argument 1's skull
+			message "%{ma.prefix}%&9You now have the head of %argument 1%"
+		else:
+			message "%{ma.prefix}%&4No permisson"
+		stop trigger

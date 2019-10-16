@@ -1,0 +1,45 @@
+command /nametag <player>:
+	description: Sets the player's nametag correctly
+	usage: /nametag <player>
+	aliases: /nt
+	executable by: players and console
+	trigger:
+		if player is set:
+			if {ma.staff.%player%} is set:
+				if {ma.staff.%player%} is greater than or equal to 2:
+					if {ma.kills.%argument 1%} is set:
+						if {ma.staff.%argument 1%} is set:
+							if {ma.staff.%argument 1%} is equal to 1:
+								set argument 1 nametag to "%{ma.color.mod}%%argument 1%"
+							else if {ma.staff.%argument 1%} is equal to 2:
+								set argument 1 nametag to "%{ma.color.admin}%%argument 1%"
+							else if {ma.staff.%argument 1%} is equal to 3:
+								set argument 1 nametag to "%{ma.color.owner}%%argument 1%"
+						else:
+							if {ma.level.%argument 1%} is set:
+								set argument 1 nametag to "%{ma.color.l%{ma.level.%argument 1%}%}%%argument 1%"
+							else:
+								set argument 1 nametag to "%{ma.color.l1}%%argument 1%"
+					else:
+						message "%{ma.prefix}%&4Error: That player hasn't played before!"
+				else:
+					message "%{ma.prefix}%&4Get an admin+ to do this!"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			if {ma.kills.%argument 1%} is set:
+				if {ma.staff.%argument 1%} is set:
+					if {ma.staff.%argument 1%} is equal to 1:
+						set argument 1 nametag to "%{ma.color.mod}%%argument 1%"
+					else if {ma.staff.%argument 1%} is equal to 2:
+						set argument 1 nametag to "%{ma.color.admin}%%argument 1%"
+					else if {ma.staff.%argument 1%} is equal to 3:
+						set argument 1 nametag to "%{ma.color.owner}%%argument 1%"
+				else:
+					if {ma.level.%argument 1%} is set:
+						set argument 1 nametag to "%{ma.color.l%{ma.level.%argument 1%}%}%%argument 1%"
+					else:
+						set argument 1 nametag to "%{ma.color.l1}%%argument 1%"
+			else:
+				message "%{ma.prefix}%&4Error: That player hasn't played before!"
+		stop trigger

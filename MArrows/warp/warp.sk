@@ -1,0 +1,17 @@
+command /warp <text>:
+	description: Warps to a warp
+	usage: /warp <name>
+	executable by: players
+	trigger:
+		if {ma.staff.%player%} is set:
+			if {ma.player.%player%} is not set:
+				if {ma.warp.%argument 1%} is set:
+					teleport player to {ma.warp.%argument 1%}
+					message "%{ma.prefix}%&9Teleported you to warp %argument 1%"
+				else:
+					message "%{ma.prefix}%&4That warp doesn't exist!"
+			else:
+				message "%{ma.prefix}%&4Cannot warp while in game"
+		else:
+			message "%{ma.prefix}%&4No permission"
+		stop trigger

@@ -1,0 +1,4 @@
+on physics:
+	if block is ladder:
+		cancel event
+	stop trigger

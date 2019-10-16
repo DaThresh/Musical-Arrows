@@ -1,0 +1,144 @@
+command /donate <text> <text> <text> [<number>]:
+	description: Gives or takes away donor privellages
+	usage: /donte <player> <add/remove> <package> [<modifier>]
+	executable by: players and console
+	trigger:
+		if player is set:
+			if {ma.staff.%player%} is set:
+				if {ma.staff.%player%} is greater than or equal to 2:
+					if argument 2 is equal to "add":
+						if argument 3 is equal to "beta":
+						else if argument 3 is equal to "jukebox":
+							if {ma.donor.%argument 1%} is set:
+								add "a" to {ma.donor.%argument 1%}
+							else:
+								set {ma.donor.%argument 1%} to "a"
+						else if argument 3 is equal to "coins" or "coin":
+							if argument 4 is set:
+								add argument 4 to {ma.coins.%argument 1%}
+								if {ma.donor.%argument 1%} is not set:
+									set {ma.donor.%argument 1%} to "c"
+								else:
+									add "c" to {ma.donor.%argument 1%}
+							else:
+								message "%{ma.prefix}%&4You have to set the modifier!"
+						else if argument 3 is equal to "xpmultiplier":
+							if argument 4 is set:
+								set {ma.multiplier.xp.user.%argument 1%} to argument 4
+								if {ma.donor.%argument 1%} is not set:
+									set {ma.donor.%argument 1%} to "y"
+								else:
+									add "y" to {ma.donor.%argument 1%}
+							else:
+								message "%{ma.prefix}%&4You have to set the modifier!"
+						else if argument 3 is equal to "coinmultiplier":
+							if argument 4 is set:
+								set {ma.multiplier.coin.user.%argument 1%} to argument 4
+								if {ma.donor.%argument 1%} is not set:
+									set {ma.donor.%argument 1%} to "z"
+								else:
+									add "z" to {ma.donor.%argument 1%}
+							else:
+								message "%{ma.prefix}%&4You have to set the modifier!"
+					else if argument 2 is equal to "remove":
+						if argument 3 is equal to "jukebox":
+							if {ma.donor.%argument 1%} is equal to "a":
+								delete {ma.donor.%argument 1%}
+							else:
+								if {ma.donor.%argument 1%} contains "a":
+									replace "a" with "" in {ma.donor.%argument 1%}
+								else:
+									message "%{ma.prefix}%&4Player didn't have jukebox!"
+						else if argument 3 is equal to "xpmultiplier":
+							if {ma.donor.%argument 1%} is equal to "y":
+								delete {ma.donor.%argument 1%}
+								delete {ma.multiplier.xp.user.%argument 1%}
+							else:
+								if {ma.donor.%argument 1%} contains "y":
+									replace "y" with "" in {ma.donor.%argument 1%}
+									delete {ma.multiplier.xp.user.%argument 1%}
+								else:
+									message "%{ma.prefix}%&4Player didn't have an xp multiplier!"
+						else if argument 3 is equal to "coinmultiplier":
+							if {ma.donor.%argument 1%} is equal to "z":
+								delete {ma.donor.%argument 1%}
+								delete {ma.multiplier.coin.user.%argument 1%}
+							else:
+								if {ma.donor.%argument 1%} contains "z":
+									replace "z" with "" in {ma.donor.%argument 1%}
+									delete {ma.multiplier.coin.user.%argument 1%}
+								else:
+									message "%{ma.prefix}%&4Player didn't have a coin multiplier!"
+					else:
+						message "%{ma.prefix}%&4Invalid action!"
+				else:
+					message "%{ma.prefix}%&4Tell an admin+ to do this!"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			if argument 2 is equal to "add":
+				if argument 3 is equal to "beta":
+				else if argument 3 is equal to "jukebox":
+					if {ma.donor.%argument 1%} is set:
+						add "a" to {ma.donor.%argument 1%}
+					else:
+						set {ma.donor.%argument 1%} to "a"
+				else if argument 3 is equal to "coins" or "coin":
+					if argument 4 is set:
+						add argument 4 to {ma.coins.%argument 1%}
+						if {ma.donor.%argument 1%} is not set:
+							set {ma.donor.%argument 1%} to "c"
+						else:
+							add "c" to {ma.donor.%argument 1%}
+					else:
+						message "%{ma.prefix}%&4You have to set the modifier!"
+				else if argument 3 is equal to "xpmultiplier":
+					if argument 4 is set:
+						set {ma.multiplier.xp.user.%argument 1%} to argument 4
+						if {ma.donor.%argument 1%} is not set:
+							set {ma.donor.%argument 1%} to "y"
+						else:
+							add "y" to {ma.donor.%argument 1%}
+					else:
+						message "%{ma.prefix}%&4You have to set the modifier!"
+				else if argument 3 is equal to "coinmultiplier":
+					if argument 4 is set:
+						set {ma.multiplier.coin.user.%argument 1%} to argument 4
+						if {ma.donor.%argument 1%} is not set:
+							set {ma.donor.%argument 1%} to "z"
+						else:
+							add "z" to {ma.donor.%argument 1%}
+					else:
+						message "%{ma.prefix}%&4You have to set the modifier"
+			else if argument 2 is equal to "remove":
+				if argument 3 is equal to "jukebox":
+					if {ma.donor.%argument 1%} is equal to "a":
+						delete {ma.donor.%argument 1%}
+					else:
+						if {ma.donor.%argument 1%} contains "a":
+							replace "a" with "" in {ma.donor.%argument 1%}
+						else:
+							message "%{ma.prefix}%&4Player didn't have jukebox!"
+				else if argument 3 is equal to "xpmultiplier":
+					if {ma.donor.%argument 1%} is equal to "y":
+						delete {ma.donor.%argument 1%}
+						delete {ma.multiplier.xp.user.%argument 1%}
+					else:
+						if {ma.donor.%argument 1%} contains "y":
+							replace "y" with "" in {ma.donor.%argument 1%}
+							delete {ma.multiplier.xp.user.%argument 1%}
+						else:
+							message "%{ma.prefix}%&4Player didn't have an xp multiplier!"
+				else if argument 3 is equal to "coinmultiplier":
+					if {ma.donor.%argument 1%} is equal to "z":
+						delete {ma.donor.%argument 1%}
+						delete {ma.multiplier.coin.user.%argument 1%}
+					else:
+						if {ma.donor.%argument 1%} contains "z":
+							replace "z" with "" in {ma.donor.%argument 1%}
+							delete {ma.multiplier.coin.user.%argument 1%}
+						else:
+							message "%{ma.prefix}%&4Player didn't have a coin multiplier!"
+			else:
+				message "%{ma.prefix}%&4Invalid action!"
+		stop trigger

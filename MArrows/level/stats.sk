@@ -1,0 +1,47 @@
+command /stats [<text>]:
+	description: Tells the player their stats
+	usage: /stats [<player>]
+	aliases: /stat
+	trigger:
+		if argument 1 is set:
+			if {ma.kills.%argument 1%} is set:
+				if argument 1 is equal to command sender:
+					if {ma.level.%player%} is set:
+						message "%{ma.prefix}%&9Your stats &0(%{ma.color.l%{ma.level.%player%}%}%Level %{ma.level.%player%}%&0)"
+					else:
+						message "%{ma.prefix}%&9Your stats &0(%{ma.color.l1}%Level 1&0)"
+				else:
+					if {ma.level.%argument 1%} is set:
+						message "%{ma.prefix}%&9Player: &f%argument 1% &0{%{ma.color.l%{ma.level.%argument 1%}%}%Level %{ma.level.%argument 1%}%&0)"
+					else:
+						message "%{ma.prefix}%&9Player: &f%argument 1% &0(%{ma.color.l1}%Level 1&0)"
+				message "%{ma.prefix}%&aKills: &f%{ma.kills.%argument 1%}%"
+				message "%{ma.prefix}%&cDeaths: &f%{ma.deaths.%argument 1%}%"
+				message "%{ma.prefix}%&1Wins: &f%{ma.wins.%argument 1%}%"
+				message "%{ma.prefix}%&2Losses: &f%{ma.losses.%argument 1%}%"
+				if {ma.deaths.%argument 1%} is equal to 0:
+					if {ma.kills.%argument 1%} is equal to 0:
+						message "%{ma.prefix}%&0KD: &f1.00"
+					else:
+						message "%{ma.prefix}%&0KD: &f%{ma.kills.%argument 1%}%.00"
+				else:
+					message "%{ma.prefix}%&0KD: &f%{ma.kills.%argument 1%}/{ma.deaths.%argument 1%}%"
+			else:
+				message "%{ma.prefix}%&4Not a valid player!"
+		else:
+			if {ma.level.%player%} is set:
+				message "%{ma.prefix}%&9Your stats &0(%{ma.color.l%{ma.level.%player%}%}%Level %{ma.level.%player%}%&0)"
+			else:
+				message "%{ma.prefix}%&9Your stats &0(%{ma.color.l1}%Level 1&0)"
+			message "%{ma.prefix}%&aKills: &f%{ma.kills.%player%}%"
+			message "%{ma.prefix}%&cDeaths: &f%{ma.deaths.%player%}%"
+			message "%{ma.prefix}%&1Wins: &f%{ma.wins.%player%}%"
+			message "%{ma.prefix}%&2Losses: &f%{ma.losses.%player%}%"
+			if {ma.deaths.%player%} is equal to 0:
+				if {ma.kills.%player%} is equal to 0:
+					message "%{ma.prefix}%&0KD: &f1.00"
+				else:
+					message "%{ma.prefix}%&0KD: &f%{ma.kills.%player%}%.00"
+			else:
+				message "%{ma.prefix}%&0KD: &f%{ma.kills.%player%}/{ma.deaths.%player%}%"
+		stop trigger

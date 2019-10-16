@@ -1,0 +1,68 @@
+on chat:
+	cancel event
+	if {ma.mute.%player%} is set:
+		message "%{ma.prefix}%&4You are muted! Go to the site to appeal!"
+		message "%{ma.prefix}%&9http://vaultmc.net/"
+		stop trigger
+	if {ma.achat.%player%} is set:
+		loop all players:
+			if {ma.staff.%loop-player%} is greater than or equal to 2:
+				send colored "&b[&f%player%&b] %message%" to loop-player
+		send "&b[&f%player%b] %message%" to console
+	else if {ma.player.%player%} is set:
+		if {ma.staff.%player%} is set:
+			if {ma.staff.%player%} is equal to 1:
+				loop all players:
+					if {ma.player.%loop-player%} is equal to {ma.player.%player%}:
+						send colored "%{ma.prefix.mod}%%player%: %message%" to loop-player
+				send "&4[%{ma.player.%player%}%] %{ma.prefix.mod}%%player%: %message%" to console
+			else if {ma.staff.%player%} is equal to 2:
+				loop all players:
+					if {ma.player.%loop-player%} is equal to {ma.player.%player%}:
+						send colored "%{ma.prefix.admin}%%player%: %message%" to loop-player
+				send "&4[%{ma.player.%player%}%] %{ma.prefix.admin}%%player%: %message%" to console
+			else if {ma.staff.%player%} is equal to 3:
+				loop all players:
+					if {ma.player.%loop-player%} is equal to {ma.player.%player%}:
+						send colored "%{ma.prefix.owner}%%player%: %message%" to loop-player
+				send "&4[%{ma.player.%player%}%] %{ma.prefix.owner}%%player%: %message%" to console
+		else:
+			if {ma.level.%player%} is set:
+				loop all players:
+					if {ma.player.%loop-player%} is equal to {ma.player.%player%}:
+						send "%{ma.prefix.l%{ma.level.%player%}%}%%player%: &7%message%" to loop-player
+				send "&4[%{ma.player.%player%}%] %{ma.prefix.l%{ma.level.%player%}%}%%player%: &7%message%" to console
+			else:
+				loop all players:
+					if {ma.player.%loop-player%} is equal to {ma.player.%player%}:
+						send "%{ma.prefix.l1}%%player%: &7%message%" to loop-player
+				send "&4[%{ma.player.%player%}%] %{ma.prefix.l1}%%player%: &7%message%" to console
+	else:
+		if {ma.staff.%player%} is set:
+			if {ma.staff.%player%} is equal to 1:
+				loop all players:
+					if {ma.player.%loop-player%} is not set:
+						send "%{ma.prefix.mod}%%player%: %message%" to loop-player
+				send colored "%{ma.prefix.mod}%%player%: %message%" to console
+			else if {ma.staff.%player%} is equal to 2:
+				loop all players:
+					if {ma.player.%loop-player%} is not set:
+						send "%{ma.prefix.admin}%%player%: %message%" to loop-player
+				send colored "%{ma.prefix.admin}%%player%: %message%" to console
+			else if {ma.staff.%player%} is equal to 3:
+				loop all players:
+					if {ma.player.%loop-player%} is not set:
+						send "%{ma.prefix.owner}%%player%: %message%" to loop-player
+				send colored "%{ma.prefix.owner}%%player%: %message%" to console
+		else:
+			if {ma.level.%player%} is set:
+				loop all players:
+					if {ma.player.%loop-player%} is not set:
+						send "%{ma.prefix.l%{ma.level.%player%}%}%%player%: &7%message%" to loop-player
+				send "%{ma.prefix.l%{ma.level.%player%}%}%%player%: &7%message%" to console
+			else:
+				loop all players:
+					if {ma.player.%loop-player%} is not set:
+						send "%{ma.prefix.l1}%%player%: &7%message%" to loop-player
+				send "%{ma.prefix.l1}%%player%: &7%message%" to console
+	stop trigger

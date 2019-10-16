@@ -1,0 +1,49 @@
+command /edit <text>:
+	description: Puts a map in edit mode
+	usage: /edit <map>
+	executable by: players and console
+	trigger:
+		if player is set:
+			if {ma.staff.%player%} is set:
+				if {ma.map.%argument 1%} is equal to argument 1:
+					if {ma.map.%argument 1%.status} is equal to 3:
+						set {_num} to 1
+						loop {ma.max.spawns} times:
+							if {ma.map.%argument 1%.spawn.%{_num}%} is not set:
+								set {_nr} to true
+							add 1 to {_num}
+						if {_nr} is equal to true:
+							message "%{ma.prefix}%&4That map isn't ready yet! Set all the spawns"
+						else:
+							set {ma.map.%argument 1%.status} to 0
+							message "%{ma.prefix}%&9Took %argument 1% out of edit mode"
+					else if {ma.map.%argument 1%.status} is equal to 0:
+						set {ma.map.%argument 1%.status} to 3
+						message "%{ma.prefix}%&9Put %argument 1% into edit mode"
+					else:
+						message "%{ma.prefix}%&4Cannot put a map in edit mode while in use!"
+				else:
+					message "%{ma.prefix}%&4That map doesn't exist!"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			if {ma.map.%argument 1%} is equal to argument 1:
+				if {ma.map.%argument 1%.status} is equal to 3:
+					set {_num} to 1
+					loop {ma.max.spawns} times:
+						if {ma.map.%argument 1%.spawn.%{_num}%} is not set:
+							set {_nr} to true
+						add 1 to {_num}
+					if {_nr} is equal to true:
+						message "%{ma.prefix}%&4That map isn't ready yet! Set all the spawns"
+					else:
+						set {ma.map.%argument 1%.status} to 0
+						message "%{ma.prefix}%&9Took %argument 1% out of edit mode"
+				else if {ma.map.%argument 1%.status} is equal to 0:
+					set {ma.map.%argument 1%.status} to 3
+					message "%{ma.prefix}%&9Put %argument 1% into edit mode"
+				else:
+					message "%{ma.prefix}%&4Cannot put a map in edit mode while in use!"
+			else:
+				message "%{ma.prefix}%&4That map doesn't exist!"
+		stop trigger

@@ -1,0 +1,3 @@
+on weather change:
+	if weather is not sunny:
+		set weather to sunny

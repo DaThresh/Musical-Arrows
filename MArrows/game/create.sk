@@ -1,0 +1,19 @@
+command /create <text>:
+	description: Creates a map
+	usage: /create <name>
+	trigger:
+		if {ma.staff.%player%} exists:
+			if {ma.staff.%player%} is greater than or equal to 2:
+				if {ma.map.%argument 1%} is not set:
+					set {ma.map.%argument 1%} to argument 1
+					set {ma.map.%argument 1%.players} to 0
+					set {ma.list.map::%argument 1%} to argument 1
+					set {ma.map.%argument 1%.status} to 3
+					message "%{ma.prefix}%&9Map %argument 1% created. Now set the spawns (/setspawn %argument 1% 1-12)"
+				else:
+					message "%{ma.prefix}%&4A map with that name already exists!"
+			else:
+				message "%{ma.prefix}%&4No permission"
+		else:
+			message "%{ma.prefix}%&4No permission"
+		stop trigger

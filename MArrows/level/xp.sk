@@ -1,0 +1,50 @@
+command /xp [<offline player>]:
+	description: Shows the XP of a player
+	usage: /xp [<player>]
+	executable by: players and console
+	trigger:
+		if player is set:
+			if argument 1 is set:
+				if {ma.kills.%argument 1%} is set:
+					if argument 1 is equal to command sender:
+						message "%{ma.prefix}%&9Your XP: &f%{ma.xp.%player%}%"
+					else:
+						message "%{ma.prefix}%&9%argument 1%'s XP: &f%{ma.xp.%argument 1%}%"
+					if {ma.level.%argument 1%} is set:
+						if {ma.level.%argument 1%} is less than 8:
+							set {_lup} to {ma.level.%argument 1%} + 1
+							message "%{ma.prefix}%&cXP until level up: &f%{ma.value.xp.l%{_lup}%}-{ma.xp.%argument 1%}%"
+						else:
+							message "%{ma.prefix}%&cLevel capped"
+					else:
+						message "%{ma.prefix}%&cXP until level up: &f%{ma.value.xp.l2}-{ma.xp.%argument 1%}%"
+				else:
+					message "%{ma.prefix}%&4The person has never played before!"
+			else:
+				message "%{ma.prefix}%&9Your XP: &f%{ma.xp.%player%}%"
+				if {ma.level.%player%} is set:
+					if {ma.level.%player%} is less than 8:
+						set {_lup} to {ma.level.%player%}
+						add 1 to {_lup}
+						message "%{ma.prefix}%&cXP until level up: &f%{ma.value.xp.l%{_lup}%}-{ma.xp.%player%}%"
+					else:
+						message "%{ma.prefix}%&cLevel capped"
+				else:
+					message "%{ma.prefix}%&cXP until level up: &f%{ma.value.xp.l2}-{ma.xp.%player%}%"
+		else:
+			if argument 1 is not set:
+				message "%{ma.prefix}%&4Specify a player!"
+			else:
+				if {ma.kills.%argument 1%} is set:
+					message "%{ma.prefix}%&9%argument 1%'s XP: &f%{ma.xp.%argument 1%}%"
+					if {ma.level.%argument 1%} is set:
+						if {ma.level.%player%} is less than 8:
+							set {_lup} to {ma.level.%argument 1%} + 1
+							message "%{ma.prefix}%&cXP until level up: &f%{ma.value.xp.l%{_lup}%}-{ma.xp.%argument 1%}%"
+						else:
+							message "%{ma.prefix}%&cLevel capped"
+					else:
+						message "%{ma.prefix}%&cXP until level up: &f%{ma.value.xp.l2}-{ma.xp.%argument 1%}%"
+				else:
+					message "%{ma.prefix}%&4That person has never played before!"
+		stop trigger

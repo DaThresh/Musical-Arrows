@@ -1,0 +1,14 @@
+on physics:
+	if block is sign:
+		cancel event
+	stop trigger
+	
+on sign change:
+	if line 1 of block contains "&":
+		set line 1 of block to colored line 1 of block
+	if line 2 of block contains "&":
+		set line 2 of block to colored line 2 of block
+	if line 3 of block contains "&":
+		set line 3 of block to colored line 3 of block
+	if line 4 of block contains "&":
+		set line 4 of block to colored line 4 of block

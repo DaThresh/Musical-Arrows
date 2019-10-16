@@ -1,0 +1,15 @@
+on sign change:
+	if line 1 of block is equal to "[LB]":
+		set {_l2} to line 2 of block parsed as an integer
+		if line 2 of block is equal to "%{_l2}%":
+			set line 1 of block to "&f[Leaderboard]"
+			set line 2 of block to "&e&l%{_l2}%"
+			set line 3 of block to "%{ma.leaderboard.%{_l2}%.player}%"
+			set line 4 of block to "%{ma.leaderboard.%{_l2}%.kills}%"
+			add location of block to {ma.lb.sign::*}
+	stop trigger
+	
+on break of a sign:
+	if line 1 of block is equal to "&f[Leaderboard]":
+		remove location of block from {ma.lb.sign::*}
+	stop trigger

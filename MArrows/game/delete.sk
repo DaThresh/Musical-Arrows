@@ -1,0 +1,26 @@
+command /delete <text>:
+	description: Deletes a map
+	usage: /delete <map>
+	executable by: players and console
+	trigger:
+		if {ma.staff.%player%} is set:
+			if {ma.staff.%player%} is greater than or equal to 2:
+				if {ma.map.%argument 1%} is set:
+					if {ma.map.%argument 1%.status} is equal to 3:
+						delete {ma.map.%argument 1%}
+						delete {ma.map.%argument 1%.players}
+						delete {ma.list.map::%argument 1%}
+						set {_number} to 1
+						loop {ma.max.spawns} times:
+							delete {ma.map.%argument 1%.spawn.%{_number}%}
+							add 1 to {_number}
+						message "%{ma.prefix}%&9Deleted the map %argument 1%"
+					else:
+						message "%{ma.prefix}%&4Put the map in edit mode to delete!"
+				else:
+					message "%{ma.prefix}%&4That map doesn't exist!"
+			else:
+				message "%{ma.prefix}%&4Get an admin+ to do this!"
+		else:
+			message "%{ma.prefix}%&4No permission"
+		stop trigger

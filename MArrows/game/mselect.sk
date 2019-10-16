@@ -1,0 +1,54 @@
+command /matchselect <integer> [<text>]:
+	description: Picks a map for the match
+	usage: /matchselect <match number> [<map>]
+	executable by: console
+	trigger:
+		if {ma.match.%argument 1%.map} is set:
+			set {_mtemp} to {ma.map.%{ma.match.%argument 1%.map}%}
+			set {_pmap} to {ma.match.%argument 1%.map}
+			set {ma.map.%{_pmap}%.status} to 0
+		if argument 2 is set:
+			if argument 2 is equal to {ma.map.%argument 2%}:
+				if {ma.map.%argument 2%.status} is equal to 0:
+					set {ma.match.%argument 1%.map} to argument 2
+					set {ma.map.%argument 2%.status} to 2
+					loop all players:
+						if {ma.player.%loop-player%} is not set:
+							send "%{ma.prefix}%&9Match &f%argument 1% &9is going to play &f%argument 2%&9!" to loop-player
+				else:
+					if {ma.map.%argument 2%.status} is equal to 2:
+						message "%{ma.prefix}%&4That map is already being used by another match!"
+					else if {ma.map.%argument 2%.status} is equal to 1:
+						message "%{ma.prefix}%&4That map is already being used by another match!"
+					else if {ma.map.%argument 2%.status} is equal to 3:
+						message "%{ma.prefix}%&4That map is in edit mode!"
+					else:
+						message "%{ma.prefix}%&4Error: &cMap in unknown state!"
+					message "%{ma.prefix}%&7Setting up match in random map..."
+					execute console command "/matchselect %argument 1%"
+					message "%{ma.prefix}%&7Match set up with the random map of %{ma.match.%argument 1%.map}%"
+			else:
+				message "%{ma.prefix}%&4That isn't a map!"
+		else:
+			set {_num} to 1
+			loop {ma.list.map::*}:
+				if {ma.map.%loop-value%.status} is equal to 0:
+					if {_mtemp} is set:
+						if loop-value is not equal to {_mtemp}:
+							set {_temp.number::%{_num}%} to loop-value
+							add 1 to {_num}
+					else:
+						set {_temp.number::%{_num}%} to loop-value
+						add 1 to {_num}
+			if size of {_temp.number::*} is equal to 0:
+				message "%{ma.prefix}%&4Error: All maps are in use! Lower the max matches value!"
+			else:
+				set {_n} to {_num} - 1
+				set {_num} to a random integer between 1 and {_n}
+				set {_map} to {_temp.number::%{_num}%}
+				set {ma.match.%argument 1%.map} to {_map}
+				set {ma.map.%{ma.match.%argument 1%.map}%.status} to 2
+				loop all players:
+					if {ma.player.%loop-player%} is not set:
+						send "%{ma.prefix}%&9Match &f%argument 1% &9is going to play &f%{_map}%&9!" to loop-player
+		stop trigger

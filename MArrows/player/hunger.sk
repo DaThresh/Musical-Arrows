@@ -1,0 +1,3 @@
+on food bar change:
+	cancel event
+	stop trigger

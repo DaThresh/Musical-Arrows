@@ -1,0 +1,142 @@
+command /run <integer>:
+	description: Runs a game
+	usage: /run <match number>
+	executable by: console
+	trigger:
+		set {_time} to {ma.end.time} * 1200
+		if {_c} is set:
+			delete {_c}
+		while {_c} is not set:
+			wait 5 ticks
+			if {ma.match.%argument 1%.players} is less than {ma.min.players}:
+				set {_c} to 1
+				exit loop
+			else if {ma.map.%{ma.match.%argument 1%.map}%.status} is not equal to 1:
+				set {_c} to 2
+				exit loop
+			else if {_time} is less than or equal to 400:
+				if {_time} is equal to 400:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&920..." to loop-player
+				else if {_time} is equal to 380:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&919..." to loop-player
+				else if {_time} is equal to 360:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&918..." to loop-player
+				else if {_time} is equal to 340:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&917..." to loop-player
+				else if {_time} is equal to 320:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&916..." to loop-player
+				else if {_time} is equal to 300:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&915..." to loop-player
+				else if {_time} is equal to 280:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&914..." to loop-player
+				else if {_time} is equal to 260:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&913..." to loop-player
+				else if {_time} is equal to 240:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&912..." to loop-player
+				else if {_time} is equal to 220:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&911..." to loop-player
+				else if {_time} is equal to 200:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&910..." to loop-player
+				else if {_time} is equal to 180:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&99..." to loop-player
+				else if {_time} is equal to 160:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&98..." to loop-player
+				else if {_time} is equal to 140:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&97..." to loop-player
+				else if {_time} is equal to 120:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&96..." to loop-player
+				else if {_time} is equal to 100:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&95..." to loop-player
+				else if {_time} is equal to 80:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&94..." to loop-player
+				else if {_time} is equal to 60:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&93..." to loop-player
+				else if {_time} is equal to 40:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&92..." to loop-player
+				else if {_time} is equal to 20:
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&91..." to loop-player
+				else if {_time} is equal to 0:
+					set {_s} to 0
+					set {_n} to " "
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							if {ma.score.%loop-player%} is greater than {_s}:
+								set {_s} to {ma.score.%loop-player%}
+								set {_n} to loop-player
+					loop all players:
+						if {ma.player.%loop-player%} is equal to argument 1:
+							send "%{ma.prefix}%&9Game over! The winner is &f%{_n}%&9!" to loop-player
+					add 1 to {ma.wins.%{_n}%}
+					if {ma.multiplier.coin.user.%{_n}%} is set:
+						if {ma.multiplier.coin.user.%{_n}%} is greater than {ma.multiplier.coin}:
+							add {ma.value.coins.win} * {ma.multiplier.coin.user.%{_n}%} to {ma.coins.%{_n}%}
+						else:
+							add {ma.value.coins.win} * {ma.multiplier.coin} to {ma.coins.%{_n}%}
+					else:
+						add {ma.value.coins.win} * {ma.multiplier.coin} to {ma.coins.%{_n}%}
+					if {ma.multiplier.xp.user.%{_n}%} is set:
+						if {ma.multiplier.xp.user.%{_n}%} is greater than {ma.multiplier.xp}:
+							add {ma.value.xp.win} * {ma.multiplier.xp.user.%{_n}%} to {ma.xp.%{_n}%}
+						else:
+							add {ma.value.xp.win} * {ma.multiplier.xp} to {ma.xp.%{_n}%}
+					else:
+						add {ma.value.xp.win} * {ma.multiplier.xp} to {ma.xp.%{_n}%}
+					execute console command "/xpcheck %{_n}%"
+					delete {_n}
+					delete {_s}
+					set {_c} to 2
+					exit loop
+			subtract 5 from {_time}
+		if {_c} is equal to 1:
+			delete {_c}
+			set {ma.map.%{ma.match.%argument 1%.map}%.status} to 2
+			loop all players:
+				if {ma.player.%loop-player%} is equal to argument 1:
+					send "%{ma.prefix}%&4Too few players in the game! Waiting for players..." to loop-player
+					heal the loop-player
+			execute console command "/moderate %argument 1% false"
+		else if {_c} is equal to 2:
+			delete {_c}
+			execute console command "/moderate %argument 1% true"
+			stop trigger
+		stop trigger

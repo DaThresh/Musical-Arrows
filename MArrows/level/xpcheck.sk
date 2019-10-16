@@ -1,0 +1,37 @@
+command /xpcheck <player>:
+	description: Checks a player for their xp level
+	usage: /xpcheck <player>
+	executable by: console
+	trigger:
+		if {ma.level.%argument 1%} is set:
+			if {ma.level.%argument 1%} is equal to 2:
+				if {ma.xp.%argument 1%} is greater than or equal to {ma.value.xp.l3}:
+					set {ma.level.%argument 1%} to 3
+					send "%{ma.prefix}%&9You leveled up to %{ma.color.l3}%Level 3&9!" to argument 1
+					add 1 to {ma.skill.%player-argument%}
+			else if {ma.level.%argument 1%} is equal to 3:
+				if {ma.xp.%argument 1%} is greater than or equal to {ma.value.xp.l4}:
+					set {ma.level.%argument 1%} to 4
+					send "%{ma.prefix}%&9You leveled up to %{ma.color.l4}%Level 4&9!" to argument 1
+					add 1 to {ma.skill.%player-argument%}
+			else if {ma.level.%argument 1%} is equal to 4:
+				if {ma.xp.%argument 1%} is greater than or equal to {ma.value.xp.l5}:
+					set {ma.level.%argument 1%} to 5
+					send "%{ma.prefix}%&9You leveled up to %{ma.color.l5}%Level 5&9!" to argument 1
+					add 1 to {ma.skill.%player-argument%}
+			else if {ma.level.%argument 1%} is equal to 5:
+				if {ma.xp.%argument 1%} is greater than or equal to {ma.value.xp.l6}:
+					set {ma.level.%argument 1%} to 6
+					send "%{ma.prefix}%&9You leveled up to %{ma.color.l6}%Level 6&9!" to argument 1
+					add 1 to {ma.skill.%player-argument%}
+			else if {ma.level.%argument 1%} is equal to 6:
+				if {ma.xp.%argument 1%} is greater than or equal to {ma.value.xp.l7}:
+					set {ma.level.%argument 1%} to 7
+					send "%{ma.prefix}%&9You leveled up to %{ma.color.l7}%Level 7&9!" to argument 1
+					add 1 to {ma.skill.%player-argument%}
+		else:
+			if {ma.xp.%argument 1%} is greater than or equal to {ma.value.xp.l2}:
+				set {ma.level.%argument 1%} to 2
+				send "%{ma.prefix}%&9You leveled up to %{ma.color.l2}%Level 2&9!" to argument 1
+				add 1 to {ma.skill.%player-argument%}
+		stop trigger

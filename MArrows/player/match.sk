@@ -1,0 +1,16 @@
+command /player <text>:
+	description: Returns information about a player
+	usage: /player <player>
+	executable by: players and console
+	trigger:
+		if {ma.kills.%argument 1%} is set:
+			set {_player} to argument 1 parsed as a player
+			if {_player} is online:
+				if {ma.player.%{_player}%} is set:
+					message "%{ma.prefix}%&f%argument 1% &9is in match &f%{ma.player.%argument 1%}% &9which is playing &f%{ma.match.%{ma.player.%argument 1%}%.map}%"
+				else:
+					message "%{ma.prefix}%&f%argument 1% &9is not in a match right now!"
+			else:
+		else:
+			message "%{ma.prefix}%&4That player has never played before!"
+		stop trigger

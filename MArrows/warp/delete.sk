@@ -1,0 +1,18 @@
+command /delwarp <text>:
+	description: Deletes a warp
+	usage: /delwarp <name>
+	executable by: players and console
+	trigger:
+		if {ma.staff.%player%} is set:
+			if {ma.player.%player%} is not set:
+				if {ma.warp.%argument 1%} is set:
+					delete {ma.warp.%argument 1%}
+					remove argument 1 from {ma.list.warp::*}
+					message "%{ma.prefix}%&4Deleted the warp &9%argument 1%"
+				else:
+					message "%{ma.prefix}%&4That warp doesn't exist!"
+			else:
+				message "%{ma.prefix}%&4Cannot delete a warp while in game!"
+		else:
+			message "%{ma.prefix}%&4No permission"
+		stop trigger

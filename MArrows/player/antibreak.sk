@@ -1,0 +1,7 @@
+on break:
+	if {ma.staff.%player%} is greater than or equal to 1:
+		if {ma.player.%player%} is set:
+			cancel event
+	else:
+		cancel event
+	stop trigger

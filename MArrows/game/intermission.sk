@@ -1,0 +1,18 @@
+command /intermission <integer>:
+	description: Has an intermission for the match
+	usage: /intermission <match>
+	executable by: console
+	trigger:
+		loop all players:
+			if {ma.player.%loop-player%} is equal to argument 1:
+				send "%{ma.prefix}%&9Intermission, %{ma.intermission.time}% seconds until game starts" to loop-player
+		set {_times} to {ma.intermission.time} - 5
+		if {_times} is less than 1:
+			set {_times} to 1
+		while {_times} is greater than 0:
+			wait 1 second
+			if {ma.match.%argument 1%.players} is less than {ma.min.players}:
+				set {ma.match.%argument 1%.error} to 1
+				stop trigger
+				exit loop
+			subtract 1 from {_times}
